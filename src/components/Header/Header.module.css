@@ -1,0 +1,28 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6rem;
+    background-color: rgba(16, 24, 32);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+  }
+  /* .init(red: 241/244, green: 170/244, blue: 76/244, alpha: 1) */
+
+  .logo {
+    color: rgb(180, 133, 72);
+    justify-self: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+  }
+
+  .logo:hover{
+    color: rgb(136, 98, 48);
+  }
