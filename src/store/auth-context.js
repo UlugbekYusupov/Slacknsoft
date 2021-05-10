@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const AuthContext = React.createContext({
     token: '',
     isLoggedIn: false,
-    login: (token) => { },
+    login: (token, expirationTime) => { },
     logout: () => { }
 })
 
@@ -15,6 +15,7 @@ const calculateRemainingTime = (expirationTime) => {
 }
 
 export const AuthContextProvider = (props) => {
+    
     const initialToken = localStorage.getItem('token')
     const [token, setToken] = useState(initialToken)
     const userIsLoggedIn = !!token

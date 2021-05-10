@@ -6,7 +6,7 @@ function Header(props) {
     return (
         <React.Fragment>
             <header className={classes.header}>
-                <Link className={classes.logo}>
+                <Link to='/' className={classes.logo}>
                     Slack & Soft
                 </Link>
             </header>

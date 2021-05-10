@@ -1,8 +1,8 @@
 import React, { useRef, useState, useContext } from 'react';
 
 import {
-  CircularProgress, Avatar, CssBaseline, TextField, FormControlLabel, Checkbox,
-  Grid, Box, Typography, makeStyles, Container
+  CircularProgress, Avatar, CssBaseline, TextField,
+  Grid, Typography, makeStyles, Container
 } from '@material-ui/core';
 
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -33,9 +33,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     borderRadius: '10px',
     border: '2px solid rgb(180, 133, 72)',
-    // boxShadow: '0 2px 8px rgba(16, 24, 32, 0.25)',
+    boxShadow: '0 2px 8px rgba(16, 24, 32, 0.25)',
     padding: '20px',
-    height:'500px'
   },
 
   avatar: {
@@ -107,7 +106,7 @@ export default function Login() {
   }
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="xs">
       {isLoading && (
         <Modal >
           <CircularProgress color="inherit" />
@@ -118,9 +117,6 @@ export default function Login() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        {/* <Typography component="h1" variant="h5">
-          Sign in
-        </Typography> */}
         <form className={classes.form} onSubmit={submitHandler}>
           <TextField
             variant="standard"
@@ -134,8 +130,6 @@ export default function Login() {
             autoComplete="email"
             inputRef={emailInputRef}
             autoFocus
-            // color='rgb(180, 133, 72)'
-            color='white'
           />
           <TextField
             variant="standard"
