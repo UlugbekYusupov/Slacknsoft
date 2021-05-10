@@ -2,10 +2,11 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import Login from './components/Auth/Login'
 import Signup from './components/Auth/Signup'
-import Header from './components/Header/Header'
-import UI from './components/Auth/UI'
 import Layout from './components/Layout/Layout'
-import Input from './components/UI/Input/Input'
+
+// import Header from './components/Header/Header'
+// import UI from './components/Auth/UI'
+// import Input from './components/UI/Input/Input'
 
 function App() {
   return (

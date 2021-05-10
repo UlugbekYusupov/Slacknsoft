@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     label: {
         display: 'inline',
         fontWeight: 'bold',
-        fontSize:'15px',
+        fontSize: '15px',
         flex: 1,
         color: 'rgb(180, 133, 72)',
     }
@@ -60,10 +60,10 @@ const emaulReducer = (state, action) => {
 
 const passwordReducer = (state, action) => {
     if (action.type === 'USER_INPUT') {
-        return { value: action.val, isValid: action.val.trim().length > 6 }
+        return { value: action.val, isValid: action.val.trim().length > 5 }
     }
     if (action.type === 'INPUT_BLUR') {
-        return { value: state.value, isValid: state.value.trim().length > 6 }
+        return { value: state.value, isValid: state.value.trim().length > 5 }
     }
     return { value: '', isValid: false }
 }
@@ -121,7 +121,7 @@ export default function Login() {
 
         // const enteredEmail = emailInputRef.current.value
         // const enteredPassword = passwordInputRef.current.value
-
+        // https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD11unAeKqJI5c1hKPG-0zSQDmU4DWur-8
         if (formIsValid) {
             setIsLoading(true)
             let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD11unAeKqJI5c1hKPG-0zSQDmU4DWur-8'
@@ -132,11 +132,12 @@ export default function Login() {
                     body: JSON.stringify({
                         email: emailState.value,
                         password: passwordState.value,
-                        returnSecureToken: true
+                        returnSecureToken: true,
                     }),
                     headers: {
-                        'Content-Type': 'application/json'
-                    }
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json;charset=utf-8',
+                    },
                 }
             ).then(res => {
                 setIsLoading(false)
@@ -192,6 +193,7 @@ export default function Login() {
                     <label className={classes.label}>비밀번호</label>
                     <Input
                         id="password"
+                        type="password"
                         placeholder=" Your password"
                         isValid={passwordIsValid}
                         value={passwordState.value}
@@ -199,6 +201,7 @@ export default function Login() {
                         onBlur={validatePasswordHandler}
                         ref={passwordInputRef}
                     />
+                    
                     <Button
                         type="submit"
                         fullWidth
