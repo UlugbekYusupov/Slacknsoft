@@ -4,24 +4,19 @@ import Login from './components/Auth/Login'
 import Signup from './components/Auth/Signup'
 import Header from './components/Header/Header'
 import UI from './components/Auth/UI'
+import Layout from './components/Layout/Layout'
+import Input from './components/UI/Input/Input'
 
 function App() {
   return (
-    <React.Fragment>
-      <Header />
-      <main>
-        <Switch>
-
-          <Route path='/login' exact component={Login} />
-          <Route path='/signup' exact component={Signup} />
-         
-          <Route path='*'>
-            <Redirect to="/" />
-          </Route>
-        </Switch>
-        {/* <UI/> */}
-      </main>
-    </React.Fragment>
+    <Layout>
+      <Switch>
+        <Route path='/login' exact component={Login} />
+        <Route path='/signup' exact component={Signup} />
+        <Route path='*'><Redirect to="/" /> </Route>
+      </Switch>
+    </Layout>
+    
   );
 }
 
