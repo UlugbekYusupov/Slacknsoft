@@ -13,7 +13,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(30),
+        marginTop: theme.spacing(15),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -219,16 +219,3 @@ export default function Login() {
         </Container>
     );
 }
-
-// function Copyright() {
-//     return (
-//         <Typography variant="body2" color="textSecondary" align="center">
-//             {'Copyright © '}
-//             <Link color="inherit" href="/">
-//                 React Meals
-//       </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }

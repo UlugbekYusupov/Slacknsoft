@@ -20,7 +20,6 @@ function Header(props) {
                             <button className={classes.link} onClick={props.onLogout}>Logout</button>}
                     </li>
                     {props.loginCtx.isLoggedIn && <li>
-                        {/* <Button onClick={props.drawerToggleClicked}>Menu</Button> */}
                         <MenuIcon clicked={props.drawerToggleClicked}/>
                     </li>}
                 </ul>
