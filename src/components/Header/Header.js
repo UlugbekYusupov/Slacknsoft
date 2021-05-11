@@ -21,7 +21,7 @@ function Header(props) {
                             <button className={classes.link} onClick={props.onLogout}>Logout</button>}
                     </li>
                     <li>
-                        <Button>Menu</Button>
+                        <Button onClick={props.drawerToggleClicked}>Menu</Button>
                     </li>
                 </ul>
             </nav>

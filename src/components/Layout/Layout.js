@@ -10,7 +10,7 @@ function Layout(props) {
     const history = useHistory()
     const [logoState, setLogoState] = useState(false)
 
-    const [sideBarState, setSideBarState] = useState(false)
+    const [showSideDrawer, setShowSideDrawer] = useState(false)
 
     const logoutHandler = () => {
         loginCtx.logout()
@@ -20,6 +20,14 @@ function Layout(props) {
     const logoHoverEnterHandler = () => { setLogoState(true) }
     const logoHoverOutHandler = () => { setLogoState(false) }
 
+    const sideDrawerCloseHandler = () => {
+        setShowSideDrawer(false)
+    }
+
+    const sideDrawerToggleHandler = () => {
+        setShowSideDrawer(!showSideDrawer)
+    }
+
     return (
         <React.Fragment>
             <Header
@@ -28,8 +36,12 @@ function Layout(props) {
                 onHoverOut={logoHoverOutHandler}
                 logoState={logoState}
                 loginCtx={loginCtx}
+                drawerToggleClicked={sideDrawerToggleHandler}
             />
-            <SideDrawer open={false} closed={true} />
+            <SideDrawer
+                open={showSideDrawer}
+                closed={sideDrawerCloseHandler}
+            />
             <main>{props.children}</main>
         </React.Fragment>
     )
