@@ -3,8 +3,11 @@
     height: 60px;
     box-sizing: border-box;
     cursor: pointer;
+    align-items: center;
+    justify-content: center;
 }
 
 .Logo img {
     height: 100%;
+    align-items: center;
 }

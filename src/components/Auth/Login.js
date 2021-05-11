@@ -118,9 +118,6 @@ export default function Login() {
 
     const submitHandler = (event) => {
         event.preventDefault()
-
-        // const enteredEmail = emailInputRef.current.value
-        // const enteredPassword = passwordInputRef.current.value
         // https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD11unAeKqJI5c1hKPG-0zSQDmU4DWur-8
         if (formIsValid) {
             setIsLoading(true)

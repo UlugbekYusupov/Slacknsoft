@@ -1,17 +1,16 @@
 import React from "react";
 import { Link } from 'react-router-dom'
-import { FaIcons } from 'react-icons/fa'
 
 import Logo from "../Logo/Logo";
 import lightLogo from '../../assets/logo2.png'
 import darkLogo from '../../assets/logo.png'
 import classes from "./Header.module.css";
-import Button from "../UI/Button/Button";
+import MenuIcon from "../UI/MenuIcon/MenuIcon";
 
 function Header(props) {
     return (
         <header className={classes.header}>
-            <Link to='/' className={classes.logo}>
+            <Link to='/'>
                 <Logo logo={!props.logoState ? lightLogo : darkLogo} onMouseOut={props.onHoverOut} onMouseEnter={props.onHoverEnter} />
             </Link>
             <nav>
@@ -20,9 +19,10 @@ function Header(props) {
                         {!props.loginCtx.isLoggedIn ? <Link className={classes.link} to='login'>Login</Link> :
                             <button className={classes.link} onClick={props.onLogout}>Logout</button>}
                     </li>
-                    <li>
-                        <Button onClick={props.drawerToggleClicked}>Menu</Button>
-                    </li>
+                    {props.loginCtx.isLoggedIn && <li>
+                        {/* <Button onClick={props.drawerToggleClicked}>Menu</Button> */}
+                        <MenuIcon clicked={props.drawerToggleClicked}/>
+                    </li>}
                 </ul>
             </nav>
         </header>

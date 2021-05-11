@@ -42,7 +42,9 @@ function Layout(props) {
                 open={showSideDrawer}
                 closed={sideDrawerCloseHandler}
             />
-            <main>{props.children}</main>
+            <main>
+                {props.children}
+            </main>
         </React.Fragment>
     )
 }
