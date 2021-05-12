@@ -200,6 +200,7 @@ export default function Login() {
                     />
                     
                     <Button
+                        disabled={!formIsValid}
                         type="submit"
                         fullWidth
                         variant="contained"

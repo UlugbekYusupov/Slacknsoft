@@ -24,8 +24,9 @@ button:disabled,
 button:focus:disabled,
 button:hover:disabled,
 button:active:disabled {
-  background: #ccc;
-  border-color: #ccc;
+  background: rgb(207, 179, 141);
+  border-color: rgb(207, 179, 141);
   color: #666666;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.20);
   cursor: not-allowed;
 }
