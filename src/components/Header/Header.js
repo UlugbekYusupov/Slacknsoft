@@ -15,13 +15,19 @@ function Header(props) {
             </Link>
             <nav>
                 <ul>
-                    <li>
-                        {!props.loginCtx.isLoggedIn ? <Link className={classes.link} to='login'>Login</Link> :
-                            <button className={classes.link} onClick={props.onLogout}>Logout</button>}
-                    </li>
-                    {props.loginCtx.isLoggedIn && <li>
-                        <MenuIcon clicked={props.drawerToggleClicked}/>
-                    </li>}
+                    {!props.loginCtx.isLoggedIn ?
+                        <li>
+                            <button onClick={props.onLogin} className={classes.link} to='login'>Login</button>
+                        </li> :
+                        <li>
+                            <button className={classes.link} onClick={props.onLogout}>Logout</button>
+                        </li>
+                    }
+                    {props.loginCtx.isLoggedIn &&
+                        <li>
+                            <MenuIcon clicked={props.drawerToggleClicked} />
+                        </li>
+                    }
                 </ul>
             </nav>
         </header>

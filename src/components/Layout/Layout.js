@@ -17,6 +17,10 @@ function Layout(props) {
         history.push('/')
     }
 
+    const loginHandler = () => {
+        history.push('/login')
+    }
+
     const logoHoverEnterHandler = () => { setLogoState(true) }
     const logoHoverOutHandler = () => { setLogoState(false) }
 
@@ -32,6 +36,7 @@ function Layout(props) {
         <React.Fragment>
             <Header
                 onLogout={logoutHandler}
+                onLogin={loginHandler}
                 onHoverEnter={logoHoverEnterHandler}
                 onHoverOut={logoHoverOutHandler}
                 logoState={logoState}

@@ -129,7 +129,7 @@ export default function Login() {
                     body: JSON.stringify({
                         email: emailState.value,
                         password: passwordState.value,
-                        returnSecureToken: true,
+                        returnedToken: true,
                     }),
                     headers: {
                         'Accept': 'application/json',
@@ -152,7 +152,7 @@ export default function Login() {
                 }
             }).then(data => {
                 loginCtx.login(data.idToken)
-                history.replace('/')
+                history.replace('/index')
             }).catch(err => {
                 alert(err.message)
             })
@@ -198,7 +198,7 @@ export default function Login() {
                         onBlur={validatePasswordHandler}
                         ref={passwordInputRef}
                     />
-                    
+
                     <Button
                         disabled={!formIsValid}
                         type="submit"
@@ -210,8 +210,11 @@ export default function Login() {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link style={{ color: 'rgba(16, 24, 32)' }} to="/forgotPassword" variant="body2">
-                                암호를 잊으셨습니까?
+                            <Link style={{ marginRight: '10px', color: 'rgba(16, 24, 32)' }} to="/account/FindUserId" variant="body2">
+                                아이디 찾기
+                            </Link>
+                            <Link style={{ color: 'rgba(16, 24, 32)' }} to="/account/FindUserPassword" variant="body2">
+                                비밀번호 찾기
                             </Link>
                         </Grid>
                     </Grid>

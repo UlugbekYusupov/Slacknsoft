@@ -4,14 +4,18 @@ import Login from './components/Auth/Login'
 import Signup from './components/Auth/Signup'
 import Layout from './components/Layout/Layout'
 import Main from './components/Main/Main'
+import FindUserId from './components/UserSettings/FindUserId'
+import FindUserPassword from './components/UserSettings/FindUserPassword'
 
 function App() {
   return (
     <Layout>
       <Switch>
-        <Route path='/' exact component={Main}/>
+        <Route path='/index' exact component={Main}/>
         <Route path='/login' exact component={Login} />
         <Route path='/signup' exact component={Signup} />
+        <Route path='/account/FindUserId' exact component={FindUserId}/>
+        <Route path='/account/FindUserPassword' exact component={FindUserPassword}/>
         <Route path='*'><Redirect to="/" /> </Route>
       </Switch>
     </Layout>
