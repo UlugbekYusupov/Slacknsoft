@@ -2,3 +2,21 @@
     text-align: center;
     color: red;
   }
+
+  .main{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background: white;
+    height: 800px;
+    width: 100%;
+    padding: 20px;
+    justify-content: center;
+  }
+
+  .buttons {
+    display:flex;
+    justify-content: center; 
+    align-items: center;
+    height: 80px;
+  }

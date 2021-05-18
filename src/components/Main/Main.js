@@ -1,87 +1,69 @@
-// import React, { useState, useEffect, useRef } from 'react';
-// import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-
-// import 'ag-grid-enterprise'
-// import 'ag-grid-community/dist/styles/ag-grid.css';
-// import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-
-// const Main = () => {
-
-//     const gridRef = useRef(null)
-//     const [rowData, setRowData] = useState([])
-
-//     useEffect(() => {
-//         fetch('https://www.ag-grid.com/example-assets/row-data.json')
-//             .then(result => result.json())
-//             .then(rowData => setRowData(rowData))
-//     }, [])
-
-//     const onButtonClick = e => {
-//         const selectedNodes = gridRef.current.api.getSelectedNodes()
-//         const selectedData = selectedNodes.map(node => node.data)
-//         const selectedDataStringPresentation = selectedData.map(node => `${node.make} ${node.model}`).join(', ')
-//         alert(`Selected nodes: ${selectedDataStringPresentation}`)
-//     }
-
-//     return (
-//         <div className="ag-theme-alpine" style={{ height: 500, width: '100%' }}>
-//             <AgGridReact
-//                 ref={gri dRef}
-//                 rowData={rowData}
-//                 rowSelection="multiple">
-//                 <AgGridColumn checkboxSelection={true} sortable={true} filter={true} field="make"></AgGridColumn>
-//                 <AgGridColumn sortable={true} filter={true} field="model"></AgGridColumn>
-//                 <AgGridColumn sortable={true} filter={true} field="price"></AgGridColumn>
-//             </AgGridReact>
-//             <button onClick={onButtonClick}>Get selected rows</button>
-//         </div>
-//     );
-// };
-// export default Main
-
 import React, { useEffect, useState, useCallback } from 'react'
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 import classes from './Main.module.css'
+import { Input, Button, ButtonGroup } from '@material-ui/core';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
+import CreateItemPopup from './CreateItemPopup';
+import Modal from '../UI/Modal/Modal';
+
+const useStyles = makeStyles((theme) => ({
+    grow: {
+        flexGrow: 1,
+    },
+    search: {
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: fade(theme.palette.common.black, 0.15),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.black, 0.25),
+        },
+        marginRight: 20,
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: theme.spacing(1),
+            width: 'auto',
+        },
+    },
+    searchIcon: {
+        padding: theme.spacing(0, 2),
+        height: '100%',
+        position: 'absolute',
+        pointerEvents: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    inputRoot: {
+        color: 'inherit',
+    },
+    inputInput: {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: '12ch',
+            '&:focus': {
+                width: '20ch',
+            },
+        },
+    },
+}));
 
 function Main() {
 
     const [items, setItems] = useState([])
     const [httpError, setHttpError] = useState()
+    const [isLoading, setIsLoading] = useState(false)
+    const classess = useStyles()
 
-    // useEffect(() => {
-    // const fetchMeals = async () => {
-    //     const response = await fetch('https://localhost:5001/api/items')
-    //     if (!response.ok) {
-    //         throw new Error("Something went wrong!")
-    //     }
-
-    //     const responseData = await response.json()
-    // const items = []
-    // for (const key in responseData) {
-    //     items.push({
-    //         id: key,
-    //         Ins_Emp: responseData[key].Ins_Emp,
-    //         Up_Emp: responseData[key].Up_Emp,
-    //         Item_Code: responseData[key].Item_Code,
-    //         Item_Name: responseData[key].Item_Name,
-    //         Item_Spec: responseData[key].Item_Spec,
-    //         Remark: responseData[key].Remark,
-    //         Unit_Code: responseData[key].Unit_Code,
-    //         Up_DateTime: responseData[key].Up_DateTime,
-    //         Ins_DateTime: responseData[key].Ins_DateTime,
-    //         Use_YN: responseData[key].Use_YN
-    //     })
-    // }
-    // setItems(items)
-    //     console.log(items)
-    // }
-
-    // fetchMeals().catch(error => {
-    //     setHttpError(error.message)
-    // })
-    // }, [])
+    const [insertState, setInsertState] = useState(false)
 
     const fetchItemsHandler = useCallback(async () => {
+        setIsLoading(true);
         setHttpError(null);
         try {
             const response = await fetch('https://localhost:5001/api/items');
@@ -110,6 +92,7 @@ function Main() {
         } catch (error) {
             setHttpError(error.message);
         }
+        setIsLoading(false);
     }, []);
 
     useEffect(() => {
@@ -122,30 +105,105 @@ function Main() {
     if (items.length > 0) {
         const keys = Object.keys(items?.[0])
         columns = keys?.map((_, index) => {
-            return {
+
+            const attributes = {
                 field: keys[index],
                 headerName: keys[index],
-                width: 150
+                width: 150,
+                editable: true,
+                // headerAlign: 'center',
+            }
+
+            if (keys[index] === "id") {
+                return {
+                    ...attributes,
+                    editable: false,
+                }
+            }
+
+            if (keys[index] === "Ins_DateTime" || keys[index] === "Up_DateTime") {
+                return {
+                    ...attributes,
+                    type: "date"
+                }
+            } else {
+                return {
+                    ...attributes
+                }
             }
         })
 
         rows = items?.map((value, index) => {
-            return value
+            return {
+                ...value,
+
+            }
         })
     }
 
-
-    if (httpError) {
-        return <section className={classes.ItemsError}>
-            <p>{httpError}</p>
-        </section>
+    const insertHandler = () => {
+        setInsertState(true)
     }
 
     return (
-        <div style={{ display: 'flex', background: 'white', height: 400, width: '100%' }}>
-            <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />
+        <div className={classes.main}>
+            {insertState &&
+                <Modal>
+                    <CreateItemPopup/>
+                </Modal>}
+                
+            <div className={classes.buttons}>
+                <ButtonGroup size="medium">
+                    <Button onClick={insertHandler}>Insert</Button>
+                    <Button>Delete</Button>
+                    <Button>Update</Button>
+                </ButtonGroup>
+                <div className={classess.search}>
+                    <div className={classess.searchIcon}>
+                        <SearchIcon />
+                    </div>
+                    <InputBase
+                        placeholder="Search…"
+                        classes={{
+                            root: classess.inputRoot,
+                            input: classess.inputInput,
+                        }}
+                        inputProps={{ 'aria-label': 'search' }}
+                    />
+                </div>
+            </div>
+            <button onClick={fetchItemsHandler} style={{ width: 100, height: 20 }}>Refresh</button>
+            <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={10}
+                loading={isLoading}
+                error={httpError}
+                components={{
+                    Toolbar: GridToolbar,
+                }}
+            />
         </div>
     )
 }
 
 export default Main
+
+// const cellRenderer = (params) => {
+    //     const onClick = () => {
+    //         const api: GridApi = params.api;
+    //         const fields = api
+    //             .getAllColumns()
+    //             .map((c) => c.field)
+    //             .filter((c) => c !== "__check__" && !!c);
+    //         const thisRow: Record<string, GridCellValue> = {};
+
+    //         fields.forEach((f) => {
+    //             thisRow[f] = params.getValue(f);
+    //         });
+
+    //         return alert(JSON.stringify(thisRow, null, 4));
+    //     };
+
+    //     return <Button onClick={onClick}>Click</Button>;
+    // }
