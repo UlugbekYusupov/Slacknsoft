@@ -26,7 +26,7 @@
 //     return (
 //         <div className="ag-theme-alpine" style={{ height: 500, width: '100%' }}>
 //             <AgGridReact
-//                 ref={gridRef}
+//                 ref={gri dRef}
 //                 rowData={rowData}
 //                 rowSelection="multiple">
 //                 <AgGridColumn checkboxSelection={true} sortable={true} filter={true} field="make"></AgGridColumn>
@@ -39,7 +39,7 @@
 // };
 // export default Main
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { DataGrid } from '@material-ui/data-grid';
 import classes from './Main.module.css'
 
@@ -48,60 +48,92 @@ function Main() {
     const [items, setItems] = useState([])
     const [httpError, setHttpError] = useState()
 
-    useEffect(() => {
-        const fetchMeals = async () => {
-            const response = await fetch('https://localhost:5001/api/items')
+    // useEffect(() => {
+    // const fetchMeals = async () => {
+    //     const response = await fetch('https://localhost:5001/api/items')
+    //     if (!response.ok) {
+    //         throw new Error("Something went wrong!")
+    //     }
+
+    //     const responseData = await response.json()
+    // const items = []
+    // for (const key in responseData) {
+    //     items.push({
+    //         id: key,
+    //         Ins_Emp: responseData[key].Ins_Emp,
+    //         Up_Emp: responseData[key].Up_Emp,
+    //         Item_Code: responseData[key].Item_Code,
+    //         Item_Name: responseData[key].Item_Name,
+    //         Item_Spec: responseData[key].Item_Spec,
+    //         Remark: responseData[key].Remark,
+    //         Unit_Code: responseData[key].Unit_Code,
+    //         Up_DateTime: responseData[key].Up_DateTime,
+    //         Ins_DateTime: responseData[key].Ins_DateTime,
+    //         Use_YN: responseData[key].Use_YN
+    //     })
+    // }
+    // setItems(items)
+    //     console.log(items)
+    // }
+
+    // fetchMeals().catch(error => {
+    //     setHttpError(error.message)
+    // })
+    // }, [])
+
+    const fetchItemsHandler = useCallback(async () => {
+        setHttpError(null);
+        try {
+            const response = await fetch('https://localhost:5001/api/items');
             if (!response.ok) {
-                throw new Error("Something went wrong!")
+                throw new Error('Something went wrong!');
             }
 
-            const responseData = await response.json()
+            const data = await response.json();
             const items = []
-            for (const key in responseData) {
+            for (const key in data) {
                 items.push({
                     id: key,
-                    Ins_Emp: responseData[key].Ins_Emp,
-                    Up_Emp: responseData[key].Up_Emp,
-                    Item_Code: responseData[key].Item_Code,
-                    Item_Name: responseData[key].Item_Name,
-                    Item_Spec: responseData[key].Item_Spec,
-                    Remark: responseData[key].Remark,
-                    Unit_Code: responseData[key].Unit_Code,
-                    Up_DateTime: responseData[key].Up_DateTime,
-                    Ins_DateTime: responseData[key].Ins_DateTime,
-                    Use_YN: responseData[key].Use_YN
+                    Ins_Emp: data[key].Ins_Emp,
+                    Up_Emp: data[key].Up_Emp,
+                    Item_Code: data[key].Item_Code,
+                    Item_Name: data[key].Item_Name,
+                    Item_Spec: data[key].Item_Spec,
+                    Remark: data[key].Remark,
+                    Unit_Code: data[key].Unit_Code,
+                    Up_DateTime: data[key].Up_DateTime,
+                    Ins_DateTime: data[key].Ins_DateTime,
+                    Use_YN: data[key].Use_YN
                 })
             }
             setItems(items)
-            console.log(items)
+        } catch (error) {
+            setHttpError(error.message);
         }
+    }, []);
 
-        fetchMeals().catch(error => {
-            setHttpError(error.message)
+    useEffect(() => {
+        fetchItemsHandler();
+    }, [fetchItemsHandler]);
+
+    let columns = []
+    let rows = []
+
+    if (items.length > 0) {
+        const keys = Object.keys(items?.[0])
+        columns = keys?.map((_, index) => {
+            return {
+                field: keys[index],
+                headerName: keys[index],
+                width: 150
+            }
         })
-    }, [])
-    
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'Item_Code', headerName: 'Item_Code', width: 150 },
-        { field: 'Item_Name', headerName: 'Item_Name', width: 150 },
-        { field: 'Ins_DateTime', headerName: 'Ins_DateTime', width: 150},
-        { field: 'Item_Spec', headerName: 'Item_Spec', width: 150 },
-        {
-            field: 'Unit_Code',
-            headerName: 'Unit_Code',
-            type: 'number',
-            width: 150,
-        },
-    ];
 
-    const rows = [
-        { id: '0', Item_Code: '222' },
-        { id: '1', Item_Spec: 'Cersei' },
-        { id: '2', Item_Name: 'Jaime' },
-        { id: '3', Ins_DateTime: 'Arya'},
-        { id: '4', Unit_Code: 'Daenerys'},
-    ];
+        rows = items?.map((value, index) => {
+            return value
+        })
+    }
+
 
     if (httpError) {
         return <section className={classes.ItemsError}>
