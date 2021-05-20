@@ -17,7 +17,7 @@ function Header(props) {
                 <ul>
                     {!props.loginCtx.isLoggedIn ?
                         <li>
-                            <button onClick={props.onLogin} className={classes.link} to='login'>Login</button>
+                            <button onClick={props.onLogin} className={classes.link} to='/login'>Login</button>
                         </li> :
                         <li>
                             <button className={classes.link} onClick={props.onLogout}>Logout</button>

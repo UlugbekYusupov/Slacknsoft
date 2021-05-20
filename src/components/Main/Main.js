@@ -150,8 +150,8 @@ function Main() {
 
     return (
         <div className={classes.main}>
-            
-            <PopupModal show={insertState} clicked={onCloseBackdrop}/>
+
+            <PopupModal show={insertState} clicked={onCloseBackdrop} />
 
             <div className={classes.buttons}>
                 <ButtonGroup size="medium">
