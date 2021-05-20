@@ -1,7 +1,7 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
+
 import Login from './components/Auth/Login'
-import Signup from './components/Auth/Signup'
 import Layout from './components/Layout/Layout'
 import Main from './components/Main/Main'
 import FindUserId from './components/UserSettings/FindUserId'
@@ -13,7 +13,6 @@ function App() {
       <Switch>
         <Route path='/index' exact component={Main}/>
         <Route path='/login' exact component={Login} />
-        <Route path='/signup' exact component={Signup} />
         <Route path='/account/FindUserId' exact component={FindUserId}/>
         <Route path='/account/FindUserPassword' exact component={FindUserPassword}/>
         <Route path='*'><Redirect to="/" /> </Route>

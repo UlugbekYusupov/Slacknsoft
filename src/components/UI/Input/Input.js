@@ -10,15 +10,16 @@ const Input = React.forwardRef((props, ref) => {
 
     useImperativeHandle(ref, () => {
         return {
-            focus: activate
+            focus: activate,
         }
     })
 
     return (
         <div className={`${classes.control} ${props.isValid === false ? classes.invalid : ''
             }`}>
-            {/* <label htmlFor={props.id}>{props.label}</label> */}
+            <label htmlFor={props.id}>{props.label}</label>
             <input
+                label={props.label}
                 ref={inputRef}
                 type={props.type}
                 id={props.id}

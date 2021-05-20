@@ -43,13 +43,15 @@ function Layout(props) {
                 loginCtx={loginCtx}
                 drawerToggleClicked={sideDrawerToggleHandler}
             />
+            <main style={{marginTop: "100px",}}>
+                {props.children}
+            </main>
+            
             <SideDrawer
                 open={showSideDrawer}
                 closed={sideDrawerCloseHandler}
             />
-            <main>
-                {props.children}
-            </main>
+
         </React.Fragment>
     )
 }

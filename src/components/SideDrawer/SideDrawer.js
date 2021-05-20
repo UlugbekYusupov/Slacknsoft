@@ -7,6 +7,7 @@ import Backdrop from './Backdrop/Backdrop'
 function SideDrawer(props) {
 
     let attachedClasses = [classes.Sidedrawer, classes.Close]
+    
     if (props.open) {
         attachedClasses = [classes.Sidedrawer, classes.Open]
     }

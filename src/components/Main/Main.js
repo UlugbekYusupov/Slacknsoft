@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react'
+
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
-import classes from './Main.module.css'
-import { Input, Button, ButtonGroup } from '@material-ui/core';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { Input, Button, ButtonGroup, makeStyles, fade, InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
-import CreateItemPopup from './CreateItemPopup';
-import Modal from '../UI/Modal/Modal';
+
+import PopupModal from './PopupModal'
+import classes from './Main.module.css'
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -145,13 +144,15 @@ function Main() {
         setInsertState(true)
     }
 
+    const onCloseBackdrop = () => {
+        setInsertState(!insertState)
+    }
+
     return (
         <div className={classes.main}>
-            {insertState &&
-                <Modal>
-                    <CreateItemPopup/>
-                </Modal>}
-                
+            
+            <PopupModal show={insertState} clicked={onCloseBackdrop}/>
+
             <div className={classes.buttons}>
                 <ButtonGroup size="medium">
                     <Button onClick={insertHandler}>Insert</Button>

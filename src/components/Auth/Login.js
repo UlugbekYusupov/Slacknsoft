@@ -13,7 +13,7 @@ import {
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(15),
+        marginTop: theme.spacing(20),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -74,6 +74,7 @@ export default function Login() {
 
     const loginCtx = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false)
+    
     const history = useHistory()
 
     const [formIsValid, setFormIsValid] = useState(false);
@@ -89,13 +90,11 @@ export default function Login() {
 
     useEffect(() => {
         const identifier = setTimeout(() => {
-            console.log("checking form validity")
             setFormIsValid(
                 emailIsValid && passwordIsValid
             );
         }, 500)
         return function cleanup() {
-            console.log("Cleanup")
             clearTimeout(identifier)
         }
     }, [emailIsValid, passwordIsValid])
