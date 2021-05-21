@@ -26,7 +26,6 @@ const Input = React.forwardRef((props, ref) => {
 
 function PopupModal(props) {
 
-    let attachedClasses = [classes.Popup, classes.Close]
 
     const insEmpRef = useRef()
     const upEmpRef = useRef()
@@ -39,10 +38,6 @@ function PopupModal(props) {
     const insDatetimeRef = useRef()
     const useYNRef = useRef()
 
-    if (props.show) {
-        attachedClasses = [classes.Popup, classes.Open]
-    }
-
     const insertTemp = []
 
     const submitCreatedItem = (event) => {
@@ -51,6 +46,7 @@ function PopupModal(props) {
         fetch(url, {
             method: 'POST',
             body: JSON.stringify({
+                Id: '23',
                 Ins_Emp: "Ins_Emp",
                 Up_Emp: "Up_Emp",
                 Item_Code: "Item_Code",
@@ -58,18 +54,22 @@ function PopupModal(props) {
                 Item_Spec: "Item_Spec",
                 Remark: "Remark",
                 Unit_Code: "Unit_Code",
-                Up_DateTime: null,
-                Ins_DateTime: null,
-                Use_YN: null
+                Up_DateTime: "2021.02.10",
+                Ins_DateTime: "202020",
+                Use_YN: {
+                    Y: true,
+                    N: false
+                }
             }),
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json;charset=utf-16',
+                'Content-Type': 'application/json',
             },
         }).then(res => {
             if (res.ok) {
                 return res.json()
             } else {
+                console.log(res)
                 return res.json().then(data => {
                     let errorMessage = 'Create items failed...'
                     if (data && data.error && data.error.message) {
@@ -85,22 +85,30 @@ function PopupModal(props) {
         })
     }
 
+    let attachedClasses = [classes.Popup, classes.Close]
+
+    if (props.show) {
+        attachedClasses = [classes.Popup, classes.Open]
+    }
+
     return (
         <React.Fragment>
             <Backdrop show={props.show} clicked={props.clicked} />
-            <form className={attachedClasses.join(' ')} onSubmit={submitCreatedItem}>
-                <Input ref={insEmpRef} label="Ins_Emp" />
-                <Input ref={upEmpRef} label="Up_Emp" />
-                <Input ref={itemCodeRef} label="Item_Code" />
-                <Input ref={itemNameRef} label="Item_Name" />
-                <Input ref={itemSpecRef} label="Item_Spec" />
-                <Input ref={remarkRef} label="Remark" />
-                <Input ref={unitCodeRef} label="Unit_Code" />
-                <Input ref={upDatetimeRef} label="Up_DateTime" />
-                <Input ref={insDatetimeRef} label="Ins_DateTime" />
-                <Input ref={useYNRef} label="Use_YN" />
-                <button className={classes.button}>Insert</button>
-            </form>
+            <div className={attachedClasses.join(' ')}>
+                <form onSubmit={submitCreatedItem}>
+                    <Input ref={insEmpRef} label="Ins_Emp" />
+                    <Input ref={upEmpRef} label="Up_Emp" />
+                    <Input ref={itemCodeRef} label="Item_Code" />
+                    <Input ref={itemNameRef} label="Item_Name" />
+                    <Input ref={itemSpecRef} label="Item_Spec" />
+                    <Input ref={remarkRef} label="Remark" />
+                    <Input ref={unitCodeRef} label="Unit_Code" />
+                    <Input ref={upDatetimeRef} label="Up_DateTime" />
+                    <Input ref={insDatetimeRef} label="Ins_DateTime" />
+                    <Input ref={useYNRef} label="Use_YN" />
+                    <button className={classes.button}>Insert</button>
+                </form>
+            </div>
         </React.Fragment>
     )
 }

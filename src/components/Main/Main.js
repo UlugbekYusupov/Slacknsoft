@@ -59,13 +59,17 @@ function Main() {
     const [isLoading, setIsLoading] = useState(false)
     const classess = useStyles()
 
+    const [rowSelectedState, setRowSelectedState] = useState(false)
+
     const [insertState, setInsertState] = useState(false)
 
     const fetchItemsHandler = useCallback(async () => {
         setIsLoading(true);
         setHttpError(null);
         try {
-            const response = await fetch('https://localhost:5001/api/items');
+            const response = await fetch("https://localhost:5001/api/items");
+            console.log(response)
+
             if (!response.ok) {
                 throw new Error('Something went wrong!');
             }
@@ -110,7 +114,6 @@ function Main() {
                 headerName: keys[index],
                 width: 150,
                 editable: true,
-                // headerAlign: 'center',
             }
 
             if (keys[index] === "id") {
@@ -135,7 +138,6 @@ function Main() {
         rows = items?.map((value, index) => {
             return {
                 ...value,
-
             }
         })
     }
@@ -149,42 +151,42 @@ function Main() {
     }
 
     return (
-        <div className={classes.main}>
-
+        <React.Fragment>
             <PopupModal show={insertState} clicked={onCloseBackdrop} />
-
-            <div className={classes.buttons}>
-                <ButtonGroup size="medium">
-                    <Button onClick={insertHandler}>Insert</Button>
-                    <Button>Delete</Button>
-                    <Button>Update</Button>
-                </ButtonGroup>
-                <div className={classess.search}>
-                    <div className={classess.searchIcon}>
-                        <SearchIcon />
+            <div className={classes.main}>
+                <div className={classes.buttons}>
+                    <ButtonGroup size="medium">
+                        <Button onClick={insertHandler}>Insert</Button>
+                        {rowSelectedState && <Button>Delete</Button>}
+                        {rowSelectedState && <Button>Update</Button>}
+                    </ButtonGroup>
+                    <div className={classess.search}>
+                        <div className={classess.searchIcon}>
+                            <SearchIcon />
+                        </div>
+                        <InputBase
+                            placeholder="Search…"
+                            classes={{
+                                root: classess.inputRoot,
+                                input: classess.inputInput,
+                            }}
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
                     </div>
-                    <InputBase
-                        placeholder="Search…"
-                        classes={{
-                            root: classess.inputRoot,
-                            input: classess.inputInput,
-                        }}
-                        inputProps={{ 'aria-label': 'search' }}
-                    />
                 </div>
+                <button onClick={fetchItemsHandler} style={{ width: 100, height: 20 }}>Refresh</button>
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    pageSize={10}
+                    loading={isLoading}
+                    error={httpError}
+                    components={{
+                        Toolbar: GridToolbar,
+                    }}
+                />
             </div>
-            <button onClick={fetchItemsHandler} style={{ width: 100, height: 20 }}>Refresh</button>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={10}
-                loading={isLoading}
-                error={httpError}
-                components={{
-                    Toolbar: GridToolbar,
-                }}
-            />
-        </div>
+        </React.Fragment>
     )
 }
 
