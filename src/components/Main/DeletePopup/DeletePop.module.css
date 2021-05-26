@@ -1,0 +1,30 @@
+.delete {
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    display: flex;
+    top: 50%;
+    left: 50%;
+    z-index: 200;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    background-color: white;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.delete button {
+    height: 30px;
+    width: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-self:center;
+    color:black;
+    padding: 15px;
+    justify-self: center;
+    align-self: center;
+    background: white;
+    border: 1px solid rgb(180, 133, 72);
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.50);
+}

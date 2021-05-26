@@ -19,7 +19,7 @@ const Input = React.forwardRef((props, ref) => {
     )
 })
 
-function InsertPop(props) {
+function InsertPop() {
 
     const insEmpRef = useRef()
     const upEmpRef = useRef()
@@ -32,26 +32,17 @@ function InsertPop(props) {
     const insDatetimeRef = useRef()
     const useYNRef = useRef()
 
-
-    let attachedClasses = [classes.Popup, classes.Close]
-
-    if (props.show) {
-        attachedClasses = [classes.Popup, classes.Open]
-    }
-
     const insertTemp = {
-        Ins_Emp: "fsdf",
-        Up_Emp: "dgffff",
-        Item_Code: "ddddd",
-        Item_Name: "cxcxcxc",
-        Item_Spec: "xzxzxzxz",
-        Remark: "sasasa",
-        Unit_Code: "123123",
-        Up_DateTime: "234324",
-        Ins_DateTime: "234234",
+        Ins_Emp: "Aaaa",
+        Up_Emp: "ddddd",
+        Item_Code: "cccccc",
+        Item_Name: "xxxxxxx",
+        Item_Spec: "444444",
+        Remark: "ddddddd",
+        Unit_Code: "122222222", 
         Use_YN: {
-            Y: true,
-            N: false
+            Y: false,
+            N: true
         }
     }
 
@@ -80,14 +71,14 @@ function InsertPop(props) {
                 })
             }
         }).then(data => {
-            console.log(data)
+            window.location.reload()
         }).catch(err => {
             alert(err.message)
         })
     }
 
     return (
-        <div className={attachedClasses.join(' ')}>
+        <div className={classes.Popup}>
             <form onSubmit={submitCreatedItem}>
                 <Input ref={insEmpRef} label="Ins_Emp" />
                 <Input ref={upEmpRef} label="Up_Emp" />

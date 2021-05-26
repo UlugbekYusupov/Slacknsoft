@@ -81,7 +81,7 @@ function Main() {
             const items = []
             for (const key in data) {
                 items.push({
-                    id: key,
+                    id: data[key].Id,
                     Ins_Emp: data[key].Ins_Emp,
                     Up_Emp: data[key].Up_Emp,
                     Item_Code: data[key].Item_Code,
@@ -154,6 +154,9 @@ function Main() {
 
     const onCloseBackdrop = () => {
         setPopupState(!popState)
+        setDeleteState(false)
+        setUpdateState(false)
+        setInsertState(false)
     }
 
     const handleRowClick = (rowParam) => {
@@ -164,15 +167,11 @@ function Main() {
     const deleteItemHandler = () => {
         setPopupState(true)
         setDeleteState(true)
-        setUpdateState(false)
-        setInsertState(false)
     }
 
     const updateItemHandler = () => {
         setPopupState(true)
         setUpdateState(true)
-        setDeleteState(false)
-        setInsertState(false)
     }
 
     return (
@@ -182,6 +181,7 @@ function Main() {
                 delete={deleteState}
                 update={updateState}
                 show={popState}
+                rowData={rowData}
                 clicked={onCloseBackdrop}
             />
             <div className={classes.main}>
