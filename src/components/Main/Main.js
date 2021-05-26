@@ -60,15 +60,18 @@ function Main() {
     const classess = useStyles()
 
     const [rowSelectedState, setRowSelectedState] = useState(false)
+    const [popState, setPopupState] = useState(false)
+    const [rowData, setRowData] = useState({})
 
     const [insertState, setInsertState] = useState(false)
+    const [deleteState, setDeleteState] = useState(false)
+    const [updateState, setUpdateState] = useState(false)
 
     const fetchItemsHandler = useCallback(async () => {
         setIsLoading(true);
         setHttpError(null);
         try {
-            const response = await fetch("https://localhost:5001/api/items");
-            console.log(response)
+            const response = await fetch("/api/items");
 
             if (!response.ok) {
                 throw new Error('Something went wrong!');
@@ -143,22 +146,50 @@ function Main() {
     }
 
     const insertHandler = () => {
+        setPopupState(true)
         setInsertState(true)
+        setDeleteState(false)
+        setUpdateState(false)
     }
 
     const onCloseBackdrop = () => {
-        setInsertState(!insertState)
+        setPopupState(!popState)
+    }
+
+    const handleRowClick = (rowParam) => {
+        setRowData(rowParam.data)
+        setRowSelectedState(true)
+    }
+
+    const deleteItemHandler = () => {
+        setPopupState(true)
+        setDeleteState(true)
+        setUpdateState(false)
+        setInsertState(false)
+    }
+
+    const updateItemHandler = () => {
+        setPopupState(true)
+        setUpdateState(true)
+        setDeleteState(false)
+        setInsertState(false)
     }
 
     return (
         <React.Fragment>
-            <PopupModal show={insertState} clicked={onCloseBackdrop} />
+            <PopupModal
+                insert={popState}
+                delete={deleteState}
+                update={updateState}
+                show={popState}
+                clicked={onCloseBackdrop}
+            />
             <div className={classes.main}>
                 <div className={classes.buttons}>
                     <ButtonGroup size="medium">
                         <Button onClick={insertHandler}>Insert</Button>
-                        {rowSelectedState && <Button>Delete</Button>}
-                        {rowSelectedState && <Button>Update</Button>}
+                        {rowSelectedState && <Button onClick={deleteItemHandler}>Delete</Button>}
+                        {rowSelectedState && <Button onClick={updateItemHandler}>Update</Button>}
                     </ButtonGroup>
                     <div className={classess.search}>
                         <div className={classess.searchIcon}>
@@ -181,6 +212,7 @@ function Main() {
                     pageSize={10}
                     loading={isLoading}
                     error={httpError}
+                    onRowSelected={(rowParam) => handleRowClick(rowParam)}
                     components={{
                         Toolbar: GridToolbar,
                     }}
@@ -191,22 +223,3 @@ function Main() {
 }
 
 export default Main
-
-// const cellRenderer = (params) => {
-    //     const onClick = () => {
-    //         const api: GridApi = params.api;
-    //         const fields = api
-    //             .getAllColumns()
-    //             .map((c) => c.field)
-    //             .filter((c) => c !== "__check__" && !!c);
-    //         const thisRow: Record<string, GridCellValue> = {};
-
-    //         fields.forEach((f) => {
-    //             thisRow[f] = params.getValue(f);
-    //         });
-
-    //         return alert(JSON.stringify(thisRow, null, 4));
-    //     };
-
-    //     return <Button onClick={onClick}>Click</Button>;
-    // }

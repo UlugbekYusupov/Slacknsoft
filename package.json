@@ -2,6 +2,7 @@
   "name": "slacknsoft",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://localhost:5001",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/data-grid": "^4.0.0-alpha.28",
