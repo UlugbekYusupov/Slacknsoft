@@ -29,7 +29,7 @@
 }
 
 .control {
-    margin: 0.5rem 0;
+    margin: 1rem 0;
     display: flex;
     align-items: stretch;
     flex-direction: column;
@@ -41,6 +41,18 @@
     color: #383838;
 }
 
+.radio {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.radio label {
+    font-weight: bold;
+    flex: 1;
+    color: #383838;
+}
 .control input {
     display: block;
     flex: none;
