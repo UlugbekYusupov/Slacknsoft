@@ -3,6 +3,7 @@ import classes from './InsertPop.module.css'
 
 const Input = React.forwardRef((props, ref) => {
     const inputRef = useRef()
+    console.log(props.value)
     return (
         <div className={classes.control}>
             <label htmlFor={props.id}>{props.label}</label>
@@ -14,7 +15,6 @@ const Input = React.forwardRef((props, ref) => {
                 value={props.value}
                 placeholder={props.placeholder}
             ></input>
-
         </div>
     )
 })
