@@ -10,7 +10,7 @@ function DeletePop(props) {
         fetch(`${url}/${props.rowData.id}`, {
             method: 'DELETE',
         }).then(res => {
-            if(res.ok) {
+            if (res.ok) {
                 window.location.reload()
             }
         })
@@ -18,8 +18,11 @@ function DeletePop(props) {
 
     return (
         <div className={classes.delete}>
-            <Button onClick={okHandler}>Ok</Button>
-            <Button>Cancel</Button>
+            <label>Do you want to delete this item?</label>
+            <div>
+                <button onClick={okHandler}>OK</button>
+                <button>CANCEL</button>
+            </div>
         </div>
     )
 }

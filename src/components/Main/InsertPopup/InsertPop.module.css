@@ -17,6 +17,7 @@
 }
 
 .button {
+    cursor: pointer;
     width: 100px;
     height: 40px;
     margin-top: 50px;
@@ -25,14 +26,20 @@
     background: white;
     border: 1px solid rgb(180, 133, 72);
     border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.50);
+    box-shadow: 0 1px 3px rgb(180, 133, 72);
+}
+
+.button:hover {
+    color: white;
+    background: rgb(155, 129, 95);
+    border: 0px;
 }
 
 .control {
     margin: 1rem 0;
     display: flex;
     align-items: stretch;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .control label {
@@ -53,6 +60,7 @@
     flex: 1;
     color: #383838;
 }
+
 .control input {
     display: block;
     flex: none;
@@ -62,6 +70,22 @@
     width: 200px;
     height: 40px;
     border: 1px solid #ccc;
+}
+
+.control select {
+    display: block;
+    flex: none;
+    font: inherit;
+    padding: 0.35rem 0.35rem;
+    border-radius: 6px;
+    width: 200px;
+    height: 40px;
+    border: 1px solid #ccc;
+}
+
+.control select:focus {
+    outline: none;
+    border-color: rgb(180, 133, 72);
 }
 
 .control input:focus {

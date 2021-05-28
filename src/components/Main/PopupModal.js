@@ -6,10 +6,8 @@ import InsertPop from './InsertPopup/InsertPop'
 
 function PopupModal(props) {
     let modal
-
-    if (props.insert) { modal = <InsertPop /> }
     if (props.delete) { modal = <DeletePop rowData={props.rowData} /> }
-    if (props.update) { modal = <p>Do you want to update this item?</p> }
+    if (props.insert || props.update) { modal = <InsertPop rowData={props.rowData} state={props.update} /> }
 
     return (
         <React.Fragment>

@@ -7,7 +7,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const Input = React.forwardRef((props, ref) => {
     const inputRef = useRef()
-
     const activate = () => {
         inputRef.current.focus()
     }
@@ -45,46 +44,38 @@ const GreenRadio = withStyles({
 })((props) => <Radio color="default" {...props} />);
 
 
-function InsertPop() {
+function InsertPop(props) {
 
-    const insEmpRef = useRef()
-    const upEmpRef = useRef()
-    const itemCodeRef = useRef()
-    const itemNameRef = useRef()
-    const itemSpecRef = useRef()
-    const remarkRef = useRef()
-    const unitCodeRef = useRef()
-    const upDatetimeRef = useRef()
-    const insDatetimeRef = useRef()
-    const useYNRef = useRef()
+    const [selectedValue, setSelectedValue] = useState(false);
+    const [optionValue, setOptionValue] = useState("")
+    const [insDateTimeValue, setInsDateTimeValue] = useState("")
+    const [upDateTimeValue, setUpDateTimeValue] = useState("")
+    const [insEmpValue, setInsEmpValue] = useState("")
+    const [upEmpValue, setUpEmpValue] = useState("")
+    const [itemCodeValue, setItemCodeValue] = useState("")
+    const [itemNameValue, setItemNameValue] = useState("")
+    const [itemSpecValue, setItemSpecValue] = useState("")
+    const [remarkValue, setRemarkValue] = useState("")
 
-    let Ins_DateTime = ""
-    let Ups_DateTime = ""
+    const [state, setState] = useState(props.state)
+    const [rowData, setRowData] = useState(props.rowData)
 
     const insertTemp = {
-        Ins_Emp: "Aaaa",
-        Up_Emp: "ddddd",
-        Item_Code: "cccccc",
-        Item_Name: "xxxxxxx",
-        Item_Spec: "444444",
-        Remark: "ddddddd",
-        Ins_DateTime: Ins_DateTime,
-        Ups_DateTime: Ups_DateTime,
-        Unit_Code: "122222222",
-        Use_YN: {
-            Y: false,
-            N: true
-        }
+        Ins_Emp: insEmpValue,
+        Up_Emp: upEmpValue,
+        Item_Code: itemCodeValue,
+        Item_Name: itemNameValue,
+        Item_Spec: itemSpecValue,
+        Remark: remarkValue,
+        Ins_DateTime: insDateTimeValue,
+        Up_DateTime: upDateTimeValue,
+        Unit_Code: optionValue,
+        Use_YN: selectedValue ? "No" : "Yes"
     }
-
-    const [selectedValue, setSelectedValue] = React.useState(true);
-
-    const handleChange = (event) => {
-        setSelectedValue(!selectedValue);
-    };
 
     const submitCreatedItem = (event) => {
         event.preventDefault()
+        console.log(event.target.value)
         const url = "/api/items"
         fetch(url, {
             method: 'POST',
@@ -93,7 +84,6 @@ function InsertPop() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(insertTemp),
-
         }).then(res => {
             console.log(res)
             if (res.ok) {
@@ -114,42 +104,62 @@ function InsertPop() {
         })
     }
 
-    const UpDateTimeHandler = (event) => {
-        Ups_DateTime = event.target.value
-    }
+    const buttonName = state ? "UPDATE" : "INSERT"
 
     return (
         <div className={classes.Popup}>
-            <form onSubmit={submitCreatedItem}>
-                <Input ref={insEmpRef} label="Ins_Emp" />
-                <Input ref={upEmpRef} label="Up_Emp" />
-                <Input type="number" ref={itemCodeRef} label="Item_Code" />
-                <Input ref={itemNameRef} label="Item_Name" />
-                <Input ref={itemSpecRef} label="Item_Spec" />
-                <Input ref={remarkRef} label="Remark" />
-                <Input ref={unitCodeRef} label="Unit_Code" />
+            {<form onSubmit={submitCreatedItem}>
+                <Input value={insEmpValue} onChange={(event) => { setInsEmpValue(event.target.value) }} id="Ins_Emp" label="Ins_Emp" />
+                <Input value={upEmpValue} onChange={(event) => { setUpEmpValue(event.target.value) }} id="Up_Emp" label="Up_Emp" />
+                <Input value={itemCodeValue} onChange={(event) => { setItemCodeValue(event.target.value) }} id="Item_Code" type="number" label="Item_Code" />
+                <Input value={itemNameValue} onChange={(event) => { setItemNameValue(event.target.value) }} id="Item_Name" label="Item_Name" />
+                <Input value={itemSpecValue} onChange={(event) => { setItemSpecValue(event.target.value) }} id="Item_Spec" label="Item_Spec" />
+                <Input value={remarkValue} onChange={(event) => { setRemarkValue(event.target.value) }} id="Remark" label="Remark" />
 
-                <Input type="date" onChange={UpDateTimeHandler} label="Up_DateTime" />
-                <Input type="date" label="Ins_DateTime" />
+                <div className={classes.control}>
+                    <label>Unit_Code</label>
+                    <select value={optionValue} onChange={(event) => { setOptionValue(event.target.value) }}>
+                        <option value=" ">Empty</option>
+                        <option value="A-101">A-101</option>
+                        <option value="B-202">B-202</option>
+                        <option value="C-303">C-303</option>
+                        <option value="D-404">D-404</option>
+                    </select>
+                </div>
+
+                <Input
+                    value={upDateTimeValue}
+                    onChange={(event) => { setUpDateTimeValue(event.target.value) }}
+                    id="Up_DateTime"
+                    type="date"
+                    label="Up_DateTime"
+                />
+
+                <Input
+                    value={insDateTimeValue}
+                    onChange={(event) => { setInsDateTimeValue(event.target.value) }}
+                    id="Ins_DateTime"
+                    type="date"
+                    label="Ins_DateTime"
+                />
 
                 <div className={classes.radio}>
                     <label>Use_YN</label>
                     <div>
-                        <FormControlLabel labelPlacement="end" value="true" control={<GreenRadio
-                            checked={selectedValue}
-                            onChange={handleChange}
+                        <FormControlLabel labelPlacement="end" control={<GreenRadio
+                            checked={!selectedValue}
+                            onChange={(event) => { setSelectedValue(!selectedValue) }}
                             name="radio-button-demo"
                         />} label="Yes" />
-                        <FormControlLabel labelPlacement="end" value="false" control={<GreenRadio
-                            checked={!selectedValue}
-                            onChange={handleChange}
+                        <FormControlLabel labelPlacement="end" control={<GreenRadio
+                            checked={selectedValue}
+                            onChange={(event) => { setSelectedValue(!selectedValue) }}
                             name="radio-button-demo"
                         />} label="No" />
                     </div>
                 </div>
-
-                <button className={classes.button}>Insert</button>
-            </form>
+                <button className={classes.button}>{buttonName}</button>
+            </form>}
         </div>
     )
 }

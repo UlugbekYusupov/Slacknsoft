@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react'
 
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
-import { Input, Button, ButtonGroup, makeStyles, fade, InputBase } from '@material-ui/core';
+import { Button, ButtonGroup, makeStyles, fade, InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 import PopupModal from './PopupModal'
 import classes from './Main.module.css'
+import { da } from 'date-fns/locale';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -111,7 +112,6 @@ function Main() {
     if (items.length > 0) {
         const keys = Object.keys(items?.[0])
         columns = keys?.map((_, index) => {
-
             const attributes = {
                 field: keys[index],
                 headerName: keys[index],
@@ -145,6 +145,8 @@ function Main() {
         })
     }
 
+
+
     const insertHandler = () => {
         setPopupState(true)
         setInsertState(true)
@@ -177,7 +179,7 @@ function Main() {
     return (
         <React.Fragment>
             <PopupModal
-                insert={popState}
+                insert={insertState}
                 delete={deleteState}
                 update={updateState}
                 show={popState}
