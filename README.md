@@ -1,4 +1,4 @@
-# Slacknsoft
+# Slack & Soft Co.Ltd
 
 This is simple user interface of SPC(Statistical Process Controls) system.
 
