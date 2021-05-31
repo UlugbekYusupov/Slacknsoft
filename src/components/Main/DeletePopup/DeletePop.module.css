@@ -15,6 +15,7 @@
 }
 
 .delete button {
+    cursor: pointer;
     height: 40px;
     width: 80px;
     color:black;
@@ -36,12 +37,12 @@
     justify-content: space-around;
     align-self:center;
     display: flex;
-    margin: 10px;
+    padding: 20px;
 }
 
 .delete label {
     font-weight: bold;
     flex: 1;
-    margin-top: 15px;
+    padding: 20px;
     color: #383838;
 }

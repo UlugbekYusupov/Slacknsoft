@@ -7,6 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const Input = React.forwardRef((props, ref) => {
     const inputRef = useRef()
+    
     const activate = () => {
         inputRef.current.focus()
     }
