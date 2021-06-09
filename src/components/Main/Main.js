@@ -6,7 +6,6 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import PopupModal from './PopupModal'
 import classes from './Main.module.css'
-import { da } from 'date-fns/locale';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -144,8 +143,6 @@ function Main() {
             }
         })
     }
-
-
 
     const insertHandler = () => {
         setPopupState(true)

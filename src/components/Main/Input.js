@@ -1,5 +1,5 @@
 import React, { useRef, useImperativeHandle } from "react";
-import classes from "./Input.module.css";
+import classes from "./InsertPopup/InsertPop.module.css";
 
 const Input = React.forwardRef((props, ref) => {
   const inputRef = useRef();
@@ -15,21 +15,17 @@ const Input = React.forwardRef((props, ref) => {
   });
 
   return (
-    <div
-      className={`${classes.control} ${
-        props.isValid === false ? classes.invalid : ""
-      }`}
-    >
+    <div className={classes.control}>
       <label htmlFor={props.id}>{props.label}</label>
       <input
+        // contentEditable={true}
         label={props.label}
         ref={inputRef}
         type={props.type}
         id={props.id}
         value={props.value}
-        onChange={props.onChange}
-        onBlur={props.onBlur}
         placeholder={props.placeholder}
+        onChange={props.onChange}
       ></input>
     </div>
   );
